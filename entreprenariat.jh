@@ -1,0 +1,293 @@
+/**
+ * The Company entity.
+ */
+entity Company {
+	comapnyName String
+	ownerName String
+	ownerAddress String
+	ownerCity String
+    companyPhone String
+    companyCellular String
+    companyEmail String
+    newCompany Boolean
+    existingCompany Boolean
+	datecreated Instant
+    sectorActivityCompany String
+    isItYourFirstCompany Boolean
+    protectionBankruptcyAct Boolean
+    haveBeenSued Boolean
+    haveTaxArrears Boolean
+    haveReceivedHelpGovernment Boolean
+    furtherInformationDetails String
+    companyOverview String
+	productAndService String
+	productAndServiceAreSeasonal Boolean
+    companyServicePeriod String
+    yourPeakSeason String
+}
+
+entity LegalFormOfCompany {
+	companyType Enum
+    registrationDate Instant
+}
+
+entity CompanyAddress {
+	companyAddress String
+	companyCity String
+	postalCode String
+    addressProposedLocation String
+    certificateOflocationBuilding Boolean
+    zoningAppropriateBusiness Boolean
+}
+
+entity LocationExpense {
+	tenantOrOwner Enum
+    monthlyRent Double
+    monthlyPropertyTax Double
+    monthlyElectricity Double
+    monthlyWater Double
+    otherMonthlyExpenses Double
+    monthlyInsurance Double
+    numberOfYearsOfLease Double
+    monthlyMortgage Double
+}
+
+entity Leaders {
+	fuulName String
+    job String
+    mainRole String
+    actionsDetained Double
+}
+
+entity ProfessionalAdvisors {
+	job String
+}
+
+entity ReferenceProfessionalAdvisors {
+	fullname String
+    phone String
+    approximateAnnualCost Double
+    approximateMonthlyCost Double
+}
+
+entity MarketResearch {
+	industryProfile String
+    companyRegion String
+    regionPopulation String
+    customerDescription String
+    gender String
+    age String
+    numberOfCustomersInMarketWithTheseAges Integer
+    commercialZone String
+    marketJustification String
+    averageCustomerPurchasePerYear String
+    listOfCompetitors String
+    totalCityPopulation Integer
+    totalPotentialCustomers Integer
+    percentageOfPotentialCustomers Integer
+    numberOfCompetitors Integer
+    yourPotentialCustomers Integer
+    estimatedMarketShare Integer
+    salesPerCustomer Integer
+    yourPotentialSales Integer
+}
+
+entity Competitors {
+	competitor String
+    force String
+    weakness String
+} 
+
+entity MarketingPlan {
+	descriptionOfMarketingActivity String
+	frequencyOfMarketingActivities String
+    monthlyPromotionBudget Integer
+    howDidYouEstablishYourPromotionCosts String
+    willYouExtendCreditToYourCustomers Boolean
+}
+
+entity PaymentMethods {
+	methodName String
+}
+
+entity PaymentConditions {
+	conditionOne Integer
+    conditionTwo Integer
+    conditionThree Integer
+    conditionFour Integer
+    conditionFive Integer
+    conditionSix Integer
+}
+
+entity OpeningTime {
+	day String
+    openning Integer
+    closing Integer
+}
+
+entity Functioning {
+	emplacement String
+    operatingLicense Boolean
+    regulationsOfLocationAndZoning Boolean
+    healthInspection Boolean
+    intellectualProperty Boolean
+    industrySpecificLicenses Boolean
+    importExport Boolean
+    employeeRegistration Boolean
+    contractualAgreements Boolean
+    otherLegalIssues Boolean
+    explain String
+    insuranceQuestions String
+    fullTimeEmployee Integer
+    partTimeEmployee Integer
+    seasonalEmployee Integer
+    contractEmployee Integer
+    isEnoughEmployees Boolean
+}
+
+entity StaffMember {
+	job String
+    roleOrtask String
+    experienceRequired String
+    salary Integer
+    advantage Integer
+}
+
+entity CompanyEquipment {
+	quantity Integer
+    description String
+    yearOfManufacture Integer
+    yearOfAcquisition Integer
+    marketPrice Integer
+}
+
+entity FinancialInformation {
+	details String
+    personalInvestment Boolean
+    youWantALoan Boolean
+    detailsOnInvestmentOrLoan String
+    profitMargin Double
+}
+
+entity ExpenseInformation {
+	label String
+	price Integer
+}
+
+entity FundInformation {
+	label String
+	price Integer
+    monthlyPayment Integer
+}
+
+entity DocumentsToAttachAnnex {
+	annualReview String
+    financialState String
+    statusOfResults String
+	cashFlowStatement String
+	breakEven String
+	taxReturns String
+}
+
+entity FixedAndVariableCosts {
+	label String
+    type String
+    price Integer
+}
+
+entity SalesForecast{
+	label String
+    type String
+    itemPrice Integer
+    quantity Integer
+}
+
+entity OtherMonthlyExpenses {
+	label String
+    price Integer
+    date Instant
+}
+
+entity CashFlowStatement{
+	label String
+    month String
+    openingBalance Integer
+    amount Integer
+}
+
+entity YearsCashFlow{
+	year Integer
+    tableName String
+}
+
+entity TypeCashMovement{
+	label String
+}
+
+entity ForecastBalanceSheetOpening{
+	label String
+    amount Integer
+}
+
+entity TypeForecastBalanceSheet{
+	    type String
+}
+
+entity BreakEven{
+	totalActualSales String
+	totalVariableCosts String
+	totalFixedCosts String
+}
+
+entity AdditionalDocumentRequired{
+	label String
+    link String
+}
+
+// defining multiple OneToMany relationships with comments
+relationship ManyToOne {
+	CompanyAddress{company} to Company
+	Company{marketResearch} to MarketResearch
+	Leaders{company} to Company
+    PaymentMethods{marketingPlan} to MarketingPlan
+    PaymentConditions{marketingPlan} to MarketingPlan
+    MarketingPlan{company} to Company
+    OpeningTime{functioning} to Functioning
+    StaffMember{functioning} to Functioning
+    CompanyEquipment{functioning} to Functioning
+    ExpenseInformation{financialInformation} to FinancialInformation
+    FundInformation{financialInformation} to FinancialInformation
+    DocumentsToAttachAnnex{financialInformation} to FinancialInformation
+    FixedAndVariableCosts{financialInformation} to FinancialInformation
+    SalesForecast{financialInformation} to FinancialInformation
+    OtherMonthlyExpenses{financialInformation} to FinancialInformation
+    CashFlowStatement{financialInformation} to FinancialInformation
+    CashFlowStatement{yearCashFlow} to YearsCashFlow
+    CashFlowStatement{yearCashFlow} to TypeCashMovement
+    ForecastBalanceSheetOpening{type} to TypeForecastBalanceSheet
+    AdditionalDocumentRequired{company} to Company
+
+}
+
+relationship OneToOne {
+	LegalFormOfCompany{company} to Company
+	LocationExpense{company} to Company
+	ProfessionalAdvisors{referenceProfessionalAdvisors} to ReferenceProfessionalAdvisors
+	MarketResearch{competitors} to Competitors
+    Functioning{company} to Company
+    FinancialInformation{company} to Company
+    FinancialInformation{sheetOpening} to ForecastBalanceSheetOpening
+    BreakEven{company} to Company
+}
+
+relationship ManyToMany {
+	Company{professionalAdvisors} to ProfessionalAdvisors{company}
+}
+
+// Set pagination options
+paginate Leaders, ProfessionalAdvisors, ReferenceProfessionalAdvisors, MarketResearch, Competitors, MarketingPlan, PaymentMethods, PaymentConditions, OpeningTime, Functioning, StaffMember, CompanyEquipment, FinancialInformation, ExpenseInformation, FundInformation, DocumentsToAttachAnnex, FixedAndVariableCosts, SalesForecast, OtherMonthlyExpenses, CashFlowStatement, YearsCashFlow, TypeCashMovement, ForecastBalanceSheetOpening, TypeForecastBalanceSheet, BreakEven, AdditionalDocumentRequired with infinite-scroll
+//paginate Job with pagination
+
+
+// Set service options to all except few
+service all with serviceImpl
